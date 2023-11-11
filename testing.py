@@ -226,9 +226,14 @@ for fold, (trn_idx, val_idx) in enumerate(kfold.split(feat_data.iloc[train_idx],
                                         drop_last=False,
                                         num_workers=0,)
     
+    
 
     # Configura y evalúa el mejor modelo en el conjunto de prueba
     b_model = earlystoper.best_model.to(device)
+
+    # Guardamos el modelo en una carpeta
+    torch.save(b_model.state_dict(), './new_model/new_gtan_ckpt.pth')
+    
     b_model.eval()
     with torch.no_grad():
         for step, (input_nodes, seeds, blocks) in enumerate(test_dataloader):
